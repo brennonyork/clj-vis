@@ -1,4 +1,4 @@
-(ns vis.core
+(ns clj-vis.core
   (:gen-class))
 
 (defn -main

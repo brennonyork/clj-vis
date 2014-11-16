@@ -1,9 +1,9 @@
-(defproject vis "0.1.0-SNAPSHOT"
-  :description "FIXME: write description"
-  :url "http://example.com/FIXME"
-  :license {:name "Eclipse Public License"
-            :url "http://www.eclipse.org/legal/epl-v10.html"}
+(defproject clj-vis "0.1.0"
+  :description "Simple way to add visual elements into Clojure data structures"
+  :url "https://github.com/brennonyork/clj-vis"
+  :license {:name "MIT"
+            :url "http://opensource.org/licenses/MIT"}
   :dependencies [[org.clojure/clojure "1.6.0"]]
-  :main ^:skip-aot vis.core
+  :main ^:skip-aot clj-vis.core
   :target-path "target/%s"
   :profiles {:uberjar {:aot :all}})
