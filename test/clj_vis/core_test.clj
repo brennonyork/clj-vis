@@ -7,7 +7,7 @@
     ;(is (->vis [1 2 3] ))
     )
   (testing "Retrieving the visual elements"
-    (testing "With singular values"
+    (testing "with singular values"
       ;; Manually setup objects for testing
       (let [; test with only a value
             obj1 {:val (Integer. 1)}
@@ -25,7 +25,7 @@
         (is (= (<vis obj2) "<ul>1.0</ul>"))
         (is (= (<vis obj3) "<ul><li>astr</li></ul>"))
         (is (= (<vis obj4) "<li>b</li>"))))
-    (testing "With collections"
+    (testing "with collections"
       ;; Manually setup objects for testing
       (let [; test collections with numbers
             obj1 {:clj-vis.core/vis "<ul>%v</ul>"
@@ -41,4 +41,6 @@
                   :val [1.0 "string" \b]}]
         (is (= (<vis obj1) "<ul><li>1</li><li>2</li><li>3</li></ul>"))
         (is (= (<vis obj2) "<ul><li>1.0</li><li>string</li><li>b</li></ul>"))
-        (is (= (<vis obj3) "<ul><li>1.0</li><li>string</li><li>b</li></ul>"))))))
+        (is (= (<vis obj3) "<ul><li>1.0</li><li>string</li><li>b</li></ul>")))))
+  (testing "Maintaining serialization"
+    (is (instance? java.io.Serializable (>vis (Integer. 1))))))

@@ -16,8 +16,8 @@ Fundamentally `clj-vis` attempts to **decouple the visualization** of data from 
 
 To jump in and get started simply add:
 
-* `[clj-viz "0.1.0"]` to your project.clj file
-* `(:require [clj-viz.core :refer [<-viz ->viz]])` to your project namespace
+* `[clj-vis "0.1.0"]` to your project.clj file
+* `(:require [clj-vis.core :refer [<vis >vis]])` to your project namespace
 
 ## Usage
 

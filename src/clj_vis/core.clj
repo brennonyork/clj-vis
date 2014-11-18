@@ -1,5 +1,6 @@
 (ns clj-vis.core
-  (:require [clojure.string :as clj-str])
+  (:refer-clojure :rename {replace core-replace})
+  (:require [clojure.string :refer [replace join]])
   (:gen-class))
 
 (defn >vis
@@ -10,22 +11,10 @@
 
 (defn <vis
   [obj]
-  (let [{combiner :clj-vis.core/combiner, vis :clj-vis.core/vis, v :val} obj
-        replace-kvs (fn [k v]
-                      (let [k (str k) v (str v)]
-                        (clj-str/replace (clj-str/replace combiner #"%k" k) #"%v" v)))
-        collapsed-str (if (not combiner)
-                        ; if no combiner, cast value (map, coll, etc.) to string and return
-                        (str v)
-                        (cond
-                         ; handle maps (i.e. key-value pairs)
-                         (map? v) (clj-str/join "" (map replace-kvs v))
-                         ; handle collections of values (i.e. no keys)
-                         (coll? v) (loop [v v res ""]
-                                     (if (empty? v) res (recur
-                                                         (rest v) (str res (replace-kvs "" (first v))))))
-                         ; else we have a primitive singular value
-                         :else (replace-kvs "" v)))]
-    (if (not vis)
-      collapsed-str
-      (clj-str/replace vis #"%v" collapsed-str))))
+  (let [{combiner :clj-vis.core/combiner, vis :clj-vis.core/vis, v :val
+         :or {combiner "%v" vis "%v"}} obj
+        replace-fn (fn [k v] (replace (replace combiner #"%k" k) #"%v" v))
+        combine-fn (fn
+                     ([v] (let [v (str v)] (replace-fn "" v)))
+                     ([k v] (let [k (str k) v (str v)] (replace-fn k v))))]
+    (replace vis #"%v" (join "" (map combine-fn (if (not (coll? v)) (vector v) v))))))
